@@ -1,0 +1,47 @@
+Subject: Action required: claim CLM-474430 will be billed in full
+From: Lumen Health Plan <alerts@member.lumenhealthplan.example>
+To: front.desk@northwindclinic.example
+Reply-To: alerts@gmail.com
+Date: Tue, 17 Mar 2026 14:05:00 +0000
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============3920275868891885921=="
+
+--===============3920275868891885921==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hello Alicia Garcia,
+
+Your explanation of benefits for claim CLM-474430 shows a denial. The full am=
+ount $476.25 will be billed unless you appeal immediately, today June 2, 2026.
+
+Use this secure link to verify your identity and file the appeal:
+https://member.lumenhealthplan.example/appeal/CLM-474430
+
+Failure to respond within 2 hours will lock the claim. Do not ignore this mes=
+sage.
+
+Lumen Health Plan member security
+
+--===============3920275868891885921==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+<!DOCTYPE html><html><body>Hello Alicia Garcia,<br>
+<br>
+Your explanation of benefits for claim CLM-474430 shows a denial. The full am=
+ount $476.25 will be billed unless you appeal immediately, today June 2, 2026=
+.<br>
+<br>
+Use this secure link to verify your identity and file the appeal:<br>
+<a href=3D"https://member.1umenhealthplan.example/appeal/CLM-474430">https://=
+member.lumenhealthplan.example/appeal/CLM-474430</a><br>
+<br>
+Failure to respond within 2 hours will lock the claim. Do not ignore this mes=
+sage.<br>
+<br>
+Lumen Health Plan member security</body></html>
+
+--===============3920275868891885921==--
