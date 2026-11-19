@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phish Check</title>
+  <style>
+    :root {
+      --ink: #1c2430;
+      --muted: #5c6b7a;
+      --paper: #f3f6f4;
+      --card: #ffffff;
+      --line: #d5e0db;
+      --teal: #0f5c5c;
+      --teal-dark: #0a3f3f;
+      --low: #1f7a4d;
+      --review: #8a5a00;
+      --suspicious: #9a3412;
+      --high: #9f1239;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.45;
+    }
+    header, main, footer { width: min(920px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 28px 0 8px; }
+    .brand { color: var(--teal); font-weight: 700; letter-spacing: 0.04em; font-size: 0.82rem; text-transform: uppercase; }
+    h1 { margin: 4px 0 8px; font-size: 2rem; line-height: 1.15; }
+    .lede { margin: 0; color: var(--muted); max-width: 68ch; }
+    .grid { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 16px; margin-top: 20px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+    label { display: block; font-weight: 650; margin-bottom: 6px; }
+    textarea {
+      width: 100%;
+      min-height: 240px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      font: 0.95rem/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: var(--ink);
+    }
+    textarea:focus, button:focus, input:focus { outline: 3px solid #9fd0d0; outline-offset: 1px; }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 10px; }
+    button, .file {
+      border: 0;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font: inherit;
+      cursor: pointer;
+    }
+    button.primary { background: var(--teal); color: white; }
+    button.primary:hover { background: var(--teal-dark); }
+    button.secondary { background: #e7f0ee; color: var(--teal-dark); }
+    input[type="file"] { max-width: 100%; }
+    .hint { color: var(--muted); font-size: 0.92rem; }
+    .error { background: #fff1f2; border: 1px solid #fecdd3; color: var(--high); padding: 10px 12px; border-radius: 8px; }
+    .result { margin-top: 16px; }
+    .scoreline { display: flex; gap: 16px; align-items: center; }
+    .score {
+      width: 92px; height: 92px; border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 2rem; font-weight: 700;
+      border: 6px solid currentColor; background: white;
+    }
+    .band-low { color: var(--low); }
+    .band-review { color: var(--review); }
+    .band-suspicious { color: var(--suspicious); }
+    .band-high { color: var(--high); }
+    .action { font-size: 1.05rem; margin: 8px 0 0; }
+    ul.reasons { padding-left: 1.1rem; }
+    ul.reasons li { margin: 8px 0; }
+    .tag {
+      display: inline-block; min-width: 4.5rem;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.03em; margin-right: 6px;
+    }
+    details { margin-top: 8px; }
+    summary { cursor: pointer; color: var(--teal-dark); }
+    dl { display: grid; grid-template-columns: 9rem 1fr; gap: 4px 8px; margin: 8px 0 0; }
+    dt { color: var(--muted); }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    footer { color: var(--muted); font-size: 0.9rem; padding: 18px 0 32px; }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">VigilAI · Phish Check</div>
+    <h1>Check a clinic email before you click</h1>
+    <p class="lede">
+      Paste the message or upload a .eml file. The check runs on this computer.
+      It does not open links, and it does not replace your clinic's security process.
+    </p>
+  </header>
+  <main>
+    <div class="grid">
+      <form class="card" method="post" enctype="multipart/form-data">
+        <label for="email_text">Email</label>
+        <textarea id="email_text" name="email_text" placeholder="Paste the subject, the from line, and the body.">{{ email_text }}</textarea>
+        <div class="row">
+          <label class="file" for="eml">Or upload a .eml file
+            <input id="eml" name="eml" type="file" accept=".eml,.txt,message/rfc822">
+          </label>
+        </div>
+        <div class="row">
+          <button class="primary" type="submit">Check this email</button>
+          <button class="secondary" type="submit" name="example" value="phishing_lure.eml">Try a fictional phish</button>
+          <button class="secondary" type="submit" name="example" value="legitimate_notice.eml">Try a fictional clinic note</button>
+        </div>
+        <p class="hint">The two examples are fictional and were held out of training. Files are limited to 1 MB and are not saved.</p>
+      </form>
+      <aside class="card">
+        <h2>How to read the score</h2>
+        <p><strong>0–29 Low.</strong> No strong warning sign stood out.</p>
+        <p><strong>30–59 Needs a closer look.</strong> Check with a phone number you already have.</p>
+        <p><strong>60–79 Suspicious.</strong> Do not click, open, or reply.</p>
+        <p><strong>80–100 High risk.</strong> Treat it as phishing and tell IT.</p>
+        <p class="hint">A familiar topic such as a claim or a lab result is not, by itself, a high score. A look-alike web address, a mismatched reply address, or a risky attachment can raise the score even when the wording is calm.</p>
+        {% if not model_loaded %}
+        <p class="hint">The language model file is not loaded. You will only see the header, link, and attachment checks.</p>
+        {% endif %}
+      </aside>
+    </div>
+
+    {% if error %}
+    <p class="error" role="alert">{{ error }}</p>
+    {% endif %}
+
+    {% if report %}
+    <section class="card result band-{{ report.band }}" role="status">
+      {% if example_note %}<p class="hint">{{ example_note }}</p>{% endif %}
+      <div class="scoreline">
+        <div class="score" aria-label="Risk score {{ report.risk }} out of 100">{{ report.risk }}</div>
+        <div>
+          <h2 style="margin: 0;">{{ report.band_label }}</h2>
+          <p class="action">{{ report.action }}</p>
+        </div>
+      </div>
+      <h3>Why</h3>
+      {% if report.findings %}
+      <ul class="reasons">
+        {% for item in report.findings %}
+        <li><span class="tag">{{ item.severity }}</span>{{ item.text }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No header, link, attachment, or urgency warning fired.</p>
+      {% endif %}
+      {% if report.wording_cues %}
+      <p>Words that raised the language-model score: {{ report.wording_cues | join(", ") }}.</p>
+      {% endif %}
+      {% if report.model_note %}<p>{{ report.model_note }}</p>{% endif %}
+      <details>
+        <summary>Details for IT</summary>
+        {% if email %}
+        <dl>
+          <dt>From</dt><dd>{{ email.from_header or "(not set)" }}</dd>
+          <dt>Reply-To</dt><dd>{{ email.reply_to or "(not set)" }}</dd>
+          <dt>Subject</dt><dd>{{ email.subject or "(not set)" }}</dd>
+          <dt>Attachments</dt>
+          <dd>
+            {% if email.attachments %}
+              {% for item in email.attachments %}{{ item.filename }}{% if not loop.last %}, {% endif %}{% endfor %}
+            {% else %}(none){% endif %}
+          </dd>
+          <dt>Links</dt>
+          <dd>
+            {% if email.links %}
+              {% for link in email.links[:8] %}{{ link.href }}{% if not loop.last %}<br>{% endif %}{% endfor %}
+            {% else %}(none){% endif %}
+          </dd>
+        </dl>
+        {% endif %}
+        {% if report.model_probabilities %}
+        <p>
+          Language-model scores
+          {% for name, value in report.model_probabilities.items() %}
+            · {{ name.replace("_", " ") }} {{ (value * 100) | round(0) | int }}%
+          {% endfor %}
+          {% if report.selected_model %}
+            · score uses {{ report.selected_model.replace("_", " ") }}
+          {% endif %}
+        </p>
+        {% endif %}
+        <p class="hint">Rule score {{ "%.2f" | format(report.rule_score) }}. Blend: {{ report.blend }}.</p>
+      </details>
+    </section>
+    {% endif %}
+  </main>
+  <footer>
+    Built by Sangeeta Sinha, VigilAI Solutions, as a local screening aid.
+    Scores are not a guarantee. The fictional clinic, plan, and lab in the examples are not real organizations.
+  </footer>
+</body>
+</html>

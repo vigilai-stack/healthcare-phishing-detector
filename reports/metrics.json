@@ -1,0 +1,762 @@
+{
+  "task": "Binary classification of unwanted mail (spam or phishing, label 1) versus legitimate mail (label 0). The healthcare rows are synthetic.",
+  "selected_model": "tfidf_logreg",
+  "selection_rule": "Each model gets one threshold chosen to maximize F1 on the mixed validation split. The deployed language model is the one with the higher average of synthetic-validation F1 and public-validation F1 at that threshold. Ties go to TF-IDF logistic regression. The test split is not used to choose the model or the threshold.",
+  "counts": {
+    "train": 3389,
+    "validation": 553,
+    "test": 986,
+    "by_source": {
+      "synthetic": 600,
+      "spamassassin": 3594,
+      "nazario": 734
+    }
+  },
+  "models": {
+    "tfidf_logreg": {
+      "threshold_selected_on": "validation",
+      "validation_threshold": 0.44,
+      "validation_f1_at_threshold": 0.9898,
+      "validation": {
+        "at_0.5": {
+          "precision": 0.9826,
+          "recall": 0.9625,
+          "f1": 0.9724,
+          "support_legitimate": 260,
+          "support_unwanted": 293,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                255,
+                5
+              ],
+              [
+                11,
+                282
+              ]
+            ],
+            "tn": 255,
+            "fp": 5,
+            "fn": 11,
+            "tp": 282
+          },
+          "mean_probability": 0.5354,
+          "threshold": 0.5
+        },
+        "at_tuned_threshold": {
+          "precision": 0.9832,
+          "recall": 0.9966,
+          "f1": 0.9898,
+          "support_legitimate": 260,
+          "support_unwanted": 293,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                255,
+                5
+              ],
+              [
+                1,
+                292
+              ]
+            ],
+            "tn": 255,
+            "fp": 5,
+            "fn": 1,
+            "tp": 292
+          },
+          "mean_probability": 0.5354,
+          "threshold": 0.44
+        },
+        "synthetic": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "support_legitimate": 60,
+          "support_unwanted": 60,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                60,
+                0
+              ],
+              [
+                0,
+                60
+              ]
+            ],
+            "tn": 60,
+            "fp": 0,
+            "fn": 0,
+            "tp": 60
+          },
+          "mean_probability": 0.5084,
+          "threshold": 0.44
+        },
+        "public": {
+          "precision": 0.9789,
+          "recall": 0.9957,
+          "f1": 0.9872,
+          "support_legitimate": 200,
+          "support_unwanted": 233,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                195,
+                5
+              ],
+              [
+                1,
+                232
+              ]
+            ],
+            "tn": 195,
+            "fp": 5,
+            "fn": 1,
+            "tp": 232
+          },
+          "mean_probability": 0.5429,
+          "threshold": 0.44
+        }
+      },
+      "test": {
+        "at_0.5": {
+          "precision": 0.9919,
+          "recall": 0.9316,
+          "f1": 0.9608,
+          "support_legitimate": 460,
+          "support_unwanted": 526,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                456,
+                4
+              ],
+              [
+                36,
+                490
+              ]
+            ],
+            "tn": 456,
+            "fp": 4,
+            "fn": 36,
+            "tp": 490
+          },
+          "mean_probability": 0.5038,
+          "threshold": 0.5
+        },
+        "at_tuned_threshold": {
+          "precision": 0.992,
+          "recall": 0.9392,
+          "f1": 0.9648,
+          "support_legitimate": 460,
+          "support_unwanted": 526,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                456,
+                4
+              ],
+              [
+                32,
+                494
+              ]
+            ],
+            "tn": 456,
+            "fp": 4,
+            "fn": 32,
+            "tp": 494
+          },
+          "mean_probability": 0.5038,
+          "threshold": 0.44
+        },
+        "synthetic": {
+          "precision": 1.0,
+          "recall": 0.55,
+          "f1": 0.7097,
+          "support_legitimate": 60,
+          "support_unwanted": 60,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                60,
+                0
+              ],
+              [
+                27,
+                33
+              ]
+            ],
+            "tn": 60,
+            "fp": 0,
+            "fn": 27,
+            "tp": 33
+          },
+          "mean_probability": 0.3246,
+          "threshold": 0.44
+        },
+        "public": {
+          "precision": 0.9914,
+          "recall": 0.9893,
+          "f1": 0.9903,
+          "support_legitimate": 400,
+          "support_unwanted": 466,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                396,
+                4
+              ],
+              [
+                5,
+                461
+              ]
+            ],
+            "tn": 396,
+            "fp": 4,
+            "fn": 5,
+            "tp": 461
+          },
+          "mean_probability": 0.5287,
+          "threshold": 0.44
+        },
+        "spamassassin_ham_false_positive_rate": {
+          "count": 400,
+          "false_positive_rate": 0.01
+        },
+        "nazario_phishing_recall": {
+          "count": 147,
+          "recall": 1.0
+        },
+        "synthetic_phish_recall": {
+          "count": 60,
+          "recall": 0.55
+        },
+        "synthetic_legit_false_positive_rate": {
+          "count": 60,
+          "false_positive_rate": 0.0
+        }
+      },
+      "validation_selection_score": 0.9936
+    },
+    "subword_embedding": {
+      "threshold_selected_on": "validation",
+      "validation_threshold": 0.49,
+      "validation_f1_at_threshold": 0.9465,
+      "validation": {
+        "at_0.5": {
+          "precision": 0.958,
+          "recall": 0.9352,
+          "f1": 0.9465,
+          "support_legitimate": 260,
+          "support_unwanted": 293,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                248,
+                12
+              ],
+              [
+                19,
+                274
+              ]
+            ],
+            "tn": 248,
+            "fp": 12,
+            "fn": 19,
+            "tp": 274
+          },
+          "mean_probability": 0.5212,
+          "threshold": 0.5
+        },
+        "at_tuned_threshold": {
+          "precision": 0.958,
+          "recall": 0.9352,
+          "f1": 0.9465,
+          "support_legitimate": 260,
+          "support_unwanted": 293,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                248,
+                12
+              ],
+              [
+                19,
+                274
+              ]
+            ],
+            "tn": 248,
+            "fp": 12,
+            "fn": 19,
+            "tp": 274
+          },
+          "mean_probability": 0.5212,
+          "threshold": 0.49
+        },
+        "synthetic": {
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "support_legitimate": 60,
+          "support_unwanted": 60,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                60,
+                0
+              ],
+              [
+                10,
+                50
+              ]
+            ],
+            "tn": 60,
+            "fp": 0,
+            "fn": 10,
+            "tp": 50
+          },
+          "mean_probability": 0.4806,
+          "threshold": 0.49
+        },
+        "public": {
+          "precision": 0.9492,
+          "recall": 0.9614,
+          "f1": 0.9552,
+          "support_legitimate": 200,
+          "support_unwanted": 233,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                188,
+                12
+              ],
+              [
+                9,
+                224
+              ]
+            ],
+            "tn": 188,
+            "fp": 12,
+            "fn": 9,
+            "tp": 224
+          },
+          "mean_probability": 0.5325,
+          "threshold": 0.49
+        }
+      },
+      "test": {
+        "at_0.5": {
+          "precision": 0.9788,
+          "recall": 0.8783,
+          "f1": 0.9259,
+          "support_legitimate": 460,
+          "support_unwanted": 526,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                450,
+                10
+              ],
+              [
+                64,
+                462
+              ]
+            ],
+            "tn": 450,
+            "fp": 10,
+            "fn": 64,
+            "tp": 462
+          },
+          "mean_probability": 0.486,
+          "threshold": 0.5
+        },
+        "at_tuned_threshold": {
+          "precision": 0.979,
+          "recall": 0.8859,
+          "f1": 0.9301,
+          "support_legitimate": 460,
+          "support_unwanted": 526,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                450,
+                10
+              ],
+              [
+                60,
+                466
+              ]
+            ],
+            "tn": 450,
+            "fp": 10,
+            "fn": 60,
+            "tp": 466
+          },
+          "mean_probability": 0.486,
+          "threshold": 0.49
+        },
+        "synthetic": {
+          "precision": 1.0,
+          "recall": 0.3667,
+          "f1": 0.5366,
+          "support_legitimate": 60,
+          "support_unwanted": 60,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                60,
+                0
+              ],
+              [
+                38,
+                22
+              ]
+            ],
+            "tn": 60,
+            "fp": 0,
+            "fn": 38,
+            "tp": 22
+          },
+          "mean_probability": 0.2584,
+          "threshold": 0.49
+        },
+        "public": {
+          "precision": 0.978,
+          "recall": 0.9528,
+          "f1": 0.9652,
+          "support_legitimate": 400,
+          "support_unwanted": 466,
+          "confusion_matrix": {
+            "labels": [
+              "legitimate",
+              "unwanted"
+            ],
+            "matrix": [
+              [
+                390,
+                10
+              ],
+              [
+                22,
+                444
+              ]
+            ],
+            "tn": 390,
+            "fp": 10,
+            "fn": 22,
+            "tp": 444
+          },
+          "mean_probability": 0.5175,
+          "threshold": 0.49
+        },
+        "spamassassin_ham_false_positive_rate": {
+          "count": 400,
+          "false_positive_rate": 0.025
+        },
+        "nazario_phishing_recall": {
+          "count": 147,
+          "recall": 0.9932
+        },
+        "synthetic_phish_recall": {
+          "count": 60,
+          "recall": 0.3667
+        },
+        "synthetic_legit_false_positive_rate": {
+          "count": 60,
+          "false_positive_rate": 0.0
+        }
+      },
+      "validation_selection_score": 0.9322
+    }
+  },
+  "risk_score_on_test": {
+    "all_test": {
+      "precision": 0.955,
+      "recall": 0.3631,
+      "f1": 0.5262,
+      "support_legitimate": 460,
+      "support_unwanted": 526,
+      "confusion_matrix": {
+        "labels": [
+          "legitimate",
+          "unwanted"
+        ],
+        "matrix": [
+          [
+            451,
+            9
+          ],
+          [
+            335,
+            191
+          ]
+        ],
+        "tn": 451,
+        "fp": 9,
+        "fn": 335,
+        "tp": 191
+      },
+      "rule": "risk >= 60 counts as unwanted",
+      "cutoff": 60,
+      "mean_risk": 38.79,
+      "share_at_least_30": 0.5649,
+      "share_at_least_60": 0.2028,
+      "share_at_least_80": 0.1826
+    },
+    "synthetic_test": {
+      "precision": 1.0,
+      "recall": 0.9667,
+      "f1": 0.9831,
+      "support_legitimate": 60,
+      "support_unwanted": 60,
+      "confusion_matrix": {
+        "labels": [
+          "legitimate",
+          "unwanted"
+        ],
+        "matrix": [
+          [
+            60,
+            0
+          ],
+          [
+            2,
+            58
+          ]
+        ],
+        "tn": 60,
+        "fp": 0,
+        "fn": 2,
+        "tp": 58
+      },
+      "rule": "risk >= 60 counts as unwanted",
+      "cutoff": 60,
+      "mean_risk": 51.88,
+      "share_at_least_30": 0.5,
+      "share_at_least_60": 0.4833,
+      "share_at_least_80": 0.4167
+    },
+    "public_test": {
+      "precision": 0.9366,
+      "recall": 0.2854,
+      "f1": 0.4375,
+      "support_legitimate": 400,
+      "support_unwanted": 466,
+      "confusion_matrix": {
+        "labels": [
+          "legitimate",
+          "unwanted"
+        ],
+        "matrix": [
+          [
+            391,
+            9
+          ],
+          [
+            333,
+            133
+          ]
+        ],
+        "tn": 391,
+        "fp": 9,
+        "fn": 333,
+        "tp": 133
+      },
+      "rule": "risk >= 60 counts as unwanted",
+      "cutoff": 60,
+      "mean_risk": 36.97,
+      "share_at_least_30": 0.5739,
+      "share_at_least_60": 0.164,
+      "share_at_least_80": 0.1501
+    },
+    "by_category": {
+      "ham": {
+        "count": 400,
+        "positives": 0,
+        "flagged": 9,
+        "rule": "risk >= 60 counts as unwanted",
+        "cutoff": 60,
+        "mean_risk": 8.71,
+        "share_at_least_30": 0.0775,
+        "share_at_least_60": 0.0225,
+        "share_at_least_80": 0.0
+      },
+      "healthcare_legit": {
+        "count": 60,
+        "positives": 0,
+        "flagged": 0,
+        "rule": "risk >= 60 counts as unwanted",
+        "cutoff": 60,
+        "mean_risk": 13.57,
+        "share_at_least_30": 0.0,
+        "share_at_least_60": 0.0,
+        "share_at_least_80": 0.0
+      },
+      "healthcare_phish": {
+        "count": 60,
+        "positives": 60,
+        "flagged": 58,
+        "rule": "risk >= 60 counts as unwanted",
+        "cutoff": 60,
+        "mean_risk": 90.2,
+        "share_at_least_30": 1.0,
+        "share_at_least_60": 0.9667,
+        "share_at_least_80": 0.8333
+      },
+      "phishing": {
+        "count": 147,
+        "positives": 147,
+        "flagged": 70,
+        "rule": "risk >= 60 counts as unwanted",
+        "cutoff": 60,
+        "mean_risk": 72.15,
+        "share_at_least_30": 1.0,
+        "share_at_least_60": 0.4762,
+        "share_at_least_80": 0.4762
+      },
+      "spam": {
+        "count": 319,
+        "positives": 319,
+        "flagged": 63,
+        "rule": "risk >= 60 counts as unwanted",
+        "cutoff": 60,
+        "mean_risk": 56.2,
+        "share_at_least_30": 1.0,
+        "share_at_least_60": 0.1975,
+        "share_at_least_80": 0.1881
+      }
+    }
+  },
+  "domain_transfer_tfidf_at_0.5": {
+    "public_train_to_synthetic_test": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6667,
+      "support_legitimate": 60,
+      "support_unwanted": 60,
+      "confusion_matrix": {
+        "labels": [
+          "legitimate",
+          "unwanted"
+        ],
+        "matrix": [
+          [
+            0,
+            60
+          ],
+          [
+            0,
+            60
+          ]
+        ],
+        "tn": 0,
+        "fp": 60,
+        "fn": 0,
+        "tp": 60
+      },
+      "mean_probability": 0.8303,
+      "threshold": 0.5,
+      "model": "tfidf_logreg",
+      "name": "public_train_to_synthetic_test"
+    },
+    "synthetic_train_to_public_test": {
+      "precision": 0.7357,
+      "recall": 0.633,
+      "f1": 0.6805,
+      "support_legitimate": 400,
+      "support_unwanted": 466,
+      "confusion_matrix": {
+        "labels": [
+          "legitimate",
+          "unwanted"
+        ],
+        "matrix": [
+          [
+            294,
+            106
+          ],
+          [
+            171,
+            295
+          ]
+        ],
+        "tn": 294,
+        "fp": 106,
+        "fn": 171,
+        "tp": 295
+      },
+      "mean_probability": 0.5003,
+      "threshold": 0.5,
+      "model": "tfidf_logreg",
+      "name": "synthetic_train_to_public_test"
+    }
+  },
+  "limitations": [
+    "Synthetic healthcare messages were written for this project. Held-out synthetic scores are not a real-world detection rate.",
+    "SpamAssassin mail is mostly 2002-2005 newsletter and spam text. A spam label is not the same thing as a phishing label.",
+    "The Nazario corpus is real historical phishing, labeled by the corpus author, and it is not a healthcare collection.",
+    "Public message text is not shipped in this repository. Retraining downloads it.",
+    "The risk score caps wording-only hits when the header and link checks are quiet. It is a screening aid, not a calibrated probability."
+  ]
+}
